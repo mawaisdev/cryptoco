@@ -1,7 +1,14 @@
 import axios from 'axios'
 import { CoinProp } from '../interface/CoinProp'
 import { useEffect, useState } from 'react'
-import { Button, Container, HStack, Text } from '@chakra-ui/react'
+import {
+  Button,
+  Container,
+  HStack,
+  Radio,
+  RadioGroup,
+  Text,
+} from '@chakra-ui/react'
 import { Coin, Error, Loader } from '.'
 
 const API_URL = `${import.meta.env.VITE_API_URL}`
@@ -12,7 +19,7 @@ export const CoinsList = () => {
   const [page, setPage] = useState<number>(1)
   const [isFetching, setIsFetching] = useState<boolean>(true)
   const [isError, setIsError] = useState<boolean>(false)
-  const coinSymbol = currency == 'eur' ? '€' : '$'
+  const coinSymbol = currency === 'eur' ? '€' : currency === 'usd' ? '$' : '₨ '
   const btns = new Array<number>(132).fill(1)
 
   const changePage = (page: number) => {
@@ -43,7 +50,14 @@ export const CoinsList = () => {
         <Loader />
       ) : (
         <>
-          <HStack wrap={'wrap'}>
+          <RadioGroup value={currency} onChange={setCurrency} p={'8'}>
+            <HStack spacing={'4'}>
+              <Radio value='pkr'>PKR</Radio>
+              <Radio value='usd'>USD</Radio>
+              <Radio value='eur'>EUR</Radio>
+            </HStack>
+          </RadioGroup>
+          <HStack wrap={'wrap'} justifyContent={'space-evenly'}>
             {coins.length < 1 ? (
               <Text mt={'4'} textAlign={'center'}>
                 No Data

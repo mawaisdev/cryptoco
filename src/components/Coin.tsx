@@ -11,7 +11,7 @@ export const Coin = ({
   coinSymbol,
 }: CoinProps) => {
   return (
-    <Link to={`/coin/:${id}`}>
+    <Link to={`/coins/${id}`}>
       <VStack
         w={'52'}
         shadow={'lg'}
@@ -30,7 +30,7 @@ export const Coin = ({
           {symbol}
         </Heading>
         <Text noOfLines={1}>{name}</Text>
-        <Text noOfLines={1}>{price ? `${coinSymbol}${price}` : 'N/A'}</Text>
+        <Text noOfLines={1}>{price ? `${coinSymbol} ${price}` : 'N/A'}</Text>
       </VStack>
     </Link>
   )

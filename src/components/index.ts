@@ -6,5 +6,20 @@ import { Coin } from './Coin'
 import { Loader } from './Loader'
 import { ExchangeCard } from './ExchangeCard'
 import { Error } from './Error'
+import { CoinDetail } from './CoinDetail'
+import { CustomBar } from './CustomBar'
+import { Item } from './Item'
 
-export { Home, Header, Coin, CoinsList, Exchanges, Loader, ExchangeCard, Error }
+export {
+  Home,
+  Header,
+  Coin,
+  CoinsList,
+  Exchanges,
+  Loader,
+  ExchangeCard,
+  Error,
+  CoinDetail,
+  CustomBar,
+  Item,
+}
