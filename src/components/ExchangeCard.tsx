@@ -1,17 +1,14 @@
-import { VStack, Image, Heading, Text } from '@chakra-ui/react'
-import { CoinProps } from '../interface/CoinProp'
-import { Link } from 'react-router-dom'
+import { Heading, Image, Text, VStack } from '@chakra-ui/react'
+import { ExchangeProp } from '../interface/ExchangeProp'
 
-export const Coin = ({
-  id,
+export const ExchangeCard = ({
   image,
-  symbol,
   name,
-  current_price: price,
-  coinSymbol,
-}: CoinProps) => {
+  trust_score_rank,
+  url,
+}: ExchangeProp) => {
   return (
-    <Link to={`/coin/:${id}`}>
+    <a href={url} target={'blank'}>
       <VStack
         w={'52'}
         shadow={'lg'}
@@ -27,11 +24,10 @@ export const Coin = ({
       >
         <Image src={image} w={'10'} h={'10'} objectFit={'contain'} alt={name} />
         <Heading size={'md'} noOfLines={1}>
-          {symbol}
+          {trust_score_rank}
         </Heading>
         <Text noOfLines={1}>{name}</Text>
-        <Text noOfLines={1}>{price ? `${coinSymbol}${price}` : 'N/A'}</Text>
       </VStack>
-    </Link>
+    </a>
   )
 }
