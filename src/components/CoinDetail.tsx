@@ -13,29 +13,51 @@ import {
   StatHelpText,
   StatArrow,
   Badge,
+  Button,
 } from '@chakra-ui/react'
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { CustomBar, Error, Item, Loader } from '.'
+import { Chart, CustomBar, Error, Item, Loader } from '.'
 import axios from 'axios'
 import { CoinDetailProps, CurrencyData } from '../interface/CoinDetailProps'
+import { MarketDataChart } from '../interface/MarketDataChart'
 
 export const CoinDetail = () => {
   const [coin, setCoin] = useState<CoinDetailProps>()
   const [isFetching, setIsFetching] = useState<boolean>(true)
   const [isError, setIsError] = useState<boolean>(false)
+  const [days, setDays] = useState<string>('24H')
+  const [chartPrices, setChartPrices] = useState<number[][]>()
   const [currency, setCurrency] = useState<string>('usd')
   const coinSymbol = currency === 'eur' ? '€' : currency === 'usd' ? '$' : '₨ '
+  const btns: string[] = [
+    '1H',
+    '24H',
+    '7d',
+    '14d',
+    '30d',
+    '60d',
+    '200d',
+    '365d',
+    'MAX',
+  ]
 
   const API_URL = `${import.meta.env.VITE_API_URL}`
   const { id } = useParams()
+
   useEffect(() => {
     const fetchCoin = async () => {
       try {
         const { data: coinDetail } = await axios.get<CoinDetailProps>(
           `${API_URL}/coins/${id}`
         )
+        const {
+          data: { prices: chartPricesData },
+        } = await axios.get<MarketDataChart>(
+          `${API_URL}/coins/${id}/market_chart?vs_currency=${currency}&days=${days}`
+        )
         setCoin(coinDetail)
+        setChartPrices(chartPricesData)
         setIsFetching(false)
       } catch (error) {
         setIsError(true)
@@ -44,7 +66,7 @@ export const CoinDetail = () => {
       }
     }
     fetchCoin()
-  }, [id])
+  }, [id, currency, days])
 
   if (isError)
     return <Error message={`Error occured While Fetching details for ${id}`} />
@@ -56,8 +78,21 @@ export const CoinDetail = () => {
       ) : (
         <>
           <Box borderWidth={1} width={'full'}>
-            Chart
+            <Chart pricesOfCoin={chartPrices} currency={currency} days={days} />
           </Box>
+          <HStack p={'4'} overflowX={'auto'}>
+            {btns.map((btn) => (
+              <Button
+                key={btn}
+                onClick={() => {
+                  setDays(btn.toLowerCase())
+                  setIsFetching(true)
+                }}
+              >
+                {btn}
+              </Button>
+            ))}
+          </HStack>
 
           <RadioGroup value={currency} onChange={setCurrency} p={'8'}>
             <HStack spacing={'4'}>

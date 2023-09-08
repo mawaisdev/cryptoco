@@ -9,6 +9,7 @@ import { Error } from './Error'
 import { CoinDetail } from './CoinDetail'
 import { CustomBar } from './CustomBar'
 import { Item } from './Item'
+import { Chart } from './Chart'
 
 export {
   Home,
@@ -22,4 +23,5 @@ export {
   CoinDetail,
   CustomBar,
   Item,
+  Chart,
 }
