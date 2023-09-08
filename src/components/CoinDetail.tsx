@@ -31,7 +31,6 @@ export const CoinDetail = () => {
   const [currency, setCurrency] = useState<string>('usd')
   const coinSymbol = currency === 'eur' ? '€' : currency === 'usd' ? '$' : '₨ '
   const btns: string[] = [
-    '1H',
     '24H',
     '7d',
     '14d',
