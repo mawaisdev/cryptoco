@@ -10,7 +10,7 @@ import { CoinDetail } from './CoinDetail'
 import { CustomBar } from './CustomBar'
 import { Item } from './Item'
 import { Chart } from './Chart'
-
+import { Footer } from './Footer'
 export {
   Home,
   Header,
@@ -24,4 +24,5 @@ export {
   CustomBar,
   Item,
   Chart,
+  Footer,
 }
